@@ -9,8 +9,7 @@ from .views import (
 	EventViewSet,
 	ContractStatusViewSet,
 	EventStatusViewSet,
-	GroupViewSet,
-	# SignupView
+	GroupViewSet
 )
 
 router = routers.SimpleRouter()
@@ -24,7 +23,6 @@ router.register('contract_status', ContractStatusViewSet, basename='contract_sta
 
 urlpatterns = [
 	path('login/', TokenObtainPairView.as_view(), name='login'),
-	# path('signup/', SignupView.as_view(), name='signup'),
 	path('signup/', UserViewSet.as_view({'post': 'create'}), name='signup'),
 	*router.urls
 ]

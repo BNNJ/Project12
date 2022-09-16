@@ -1,17 +1,13 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from .models import Group, User, Customer, Event, Contract
 
-groups = Group.objects.all()
-sales_group = next(g for g in groups if g.name == "sales")
-support_group = next(g for g in groups if g.name == "support")
-admin_group = next(g for g in groups if g.name == "admin")
-
 
 class IsSales(BasePermission):
 	""""""
 	message = "Only members of the sales team can access this."
 
 	def has_permission(self, request, view):
+		sale_group = Group.objects.get(name='sales')
 		return sales_group in request.user.groups.iterator()
 
 	def has_object_permission(self, request, view, obj):
@@ -25,12 +21,14 @@ class IsSupport(BasePermission):
 	message = "Only members of the support team can access this."
 
 	def has_permission(self, request, view):
+		support_group = Group.objects.get(name='support')
 		return support_group in request.user.groups.iterator()
 
 	def has_object_permission(self, request, view, obj):
 		if isinstance(obj, Event):
 			return obj.support_contact == user
 		return False
+
 
 class ReadOnly(BasePermission):
 
@@ -46,6 +44,7 @@ class IsAdmin(BasePermission):
 	message = "Only admins can access this."
 
 	def has_permission(self, request, view):
+		admin_group = Group.objects.get(name='admin')
 		return admin_group in request.user.groups.iterator()
 
 	def has_object_permission(self, request, view, obj):

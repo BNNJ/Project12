@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Customer, Contract, ContractStatus, Event, EventStatus
+from .models import Customer, Group, Contract, ContractStatus, Event, EventStatus
 from .serializers import (
 	UserSerializer,
 	GroupSerializer,
@@ -22,15 +22,7 @@ from .serializers import (
 	EventSerializer,
 	EventStatusSerializer
 )
-from .permissions import (
-	IsAdmin,
-	IsSales,
-	IsSupport,
-	ReadOnly,
-	admin_group,
-	sales_group,
-	support_group
-)
+from .permissions import (IsAdmin, IsSales, IsSupport, ReadOnly)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -60,9 +52,9 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user
-		user_groups = list(user.groups.iterator())
 		queryset = Customer.objects.all()
-		if admin_group in user_groups:
+		admin_group = Group.objects.get(name='admin')
+		if admin_group in user.groups.iterator():
 			return queryset
 		return queryset.filter(
 			Q(sales_contact=user) | Q(events__support_contact=user)
@@ -71,6 +63,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
 	def perform_create(self, serializer):
 		contact_id = self.request.data.get('sales_contact', self.request.user.id)
 		contact = User.objects.get(id=contact_id)
+		sales_group = Group.objects.get(name='sales')
 		if sales_group in contact.groups.iterator():
 			serializer.save(sales_contact=contact)
 		else:
@@ -99,8 +92,8 @@ class ContractViewSet(viewsets.ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user
-		user_groups = list(user.groups.iterator())
-		if admin_group in user_groups:
+		admin_group = Group.objects.get(name='admin')
+		if admin_group in user.groups.iterator():
 			return Contract.objects.all()
 		return user.contracts.all()
 
@@ -124,8 +117,8 @@ class EventViewSet(viewsets.ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user
-		user_groups = list(user.groups.iterator())
-		if admin_group in user_groups:
+		admin_group = Group.objects.get(name='admin')
+		if admin_group in user.groups.iterator():
 			return Event.objects.all()
 		return user.events.all() | Events.objects.filter(customer__sales_contact=user)
 
