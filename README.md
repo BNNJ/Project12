@@ -25,12 +25,15 @@ pip install -r {path/to/project}/requirements.txt
 
 ## usage
 
+Some basic users are provided through the `python -m manage.py seed` command,  
+but you can chose to make your own instead:
+
 create a superuser:
 ```sh
 {path/to/project}/manage.py createsuperuser
 ```
 and follow the instructions.
-
+You can then add users for the sales and support groups.
 
 run the webserver:
 ```sh
