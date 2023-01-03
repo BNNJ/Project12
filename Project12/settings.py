@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
+
 from pathlib import Path
 from datetime import timedelta
 
@@ -82,9 +84,9 @@ WSGI_APPLICATION = "Project12.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "epicevent",
-        "USER": "admin",
-        "PASSWORD": "admin",
+        "NAME": os.environ.get("EE_DB_NAME"),
+        "USER": os.environ.get("EE_DB_USER"),
+        "PASSWORD": os.environ.get("EE_DB_PASSWORD"),
         "HOST": "localhost",
         "PORT": "",
     }

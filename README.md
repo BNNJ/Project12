@@ -39,6 +39,11 @@ pip install -r requirements.txt
 At this point, you'll need to setup a postgreSQL database:  
 [see their documentation](https://www.postgresql.org/docs/current/tutorial-install.html)
 
+The application requires three environment variables:
+- EE_DB_NAME: the database name
+- EE_DB_USER: the username of a user with access to the database
+- EE_DB_PASSWORD: the password of the user defined above
+
 migrate base data to the database:
 ```sh
 python manage.py migrate
