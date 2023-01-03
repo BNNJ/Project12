@@ -27,7 +27,7 @@ source venv/bin/activate
 ```
 enter the virtual envirionment (Windows PowerShell):
 ```sh
-venv\Scripts\Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
 install dependancies:
 ```sh
