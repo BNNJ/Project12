@@ -103,7 +103,7 @@ def _create_groups(apps, schema_editor):
 
 
 def _delete_groups(apps, schema_editor):
-    print("deleting groups fron database...")
+    print("\ndeleting groups from database...")
     Group.objects.all().delete()
 
 
