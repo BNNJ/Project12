@@ -10,18 +10,46 @@ clone the repo:
 ```sh
 git clone https://github.com/BNNJ/Project9 {path/to/project}
 ```
+move to the directory:
+```sh
+cd {path/to/project}
+```
+
+### virtual environment and dependancies
+
 create a virtual environment:
 ```sh
-python -m venv {path/to/env}
+python -m venv venv
 ```
-enter the virtual environment:
+enter the virtual environment (Linux/MacOS):
 ```sh
-source {path/to/env}/bin/activate
+source venv/bin/activate
+```
+enter the virtual envirionment (Windows PowerShell):
+```sh
+venv\Scripts\Activate.ps1
 ```
 install dependancies:
 ```sh
-pip install -r {path/to/project}/requirements.txt
+pip install -r requirements.txt
 ```
+
+### database
+
+At this point, you'll need to setup a postgreSQL database:  
+[see their documentation](https://www.postgresql.org/docs/current/tutorial-install.html)
+
+migrate base data to the database:
+```sh
+python manage.py migrate
+```
+This will add the necessary groups, statuses, etc. to the database.  
+
+Note that if no migration is applied (if you previously applied the migrations then flush the database for example), you will need to reverse existing migrations first:
+```sh
+python manage.py migrate api zero
+```
+Then apply the migrations.
 
 ## usage
 
@@ -30,14 +58,14 @@ but you can chose to make your own instead:
 
 create a superuser:
 ```sh
-{path/to/project}/manage.py createsuperuser
+python manage.py createsuperuser
 ```
 and follow the instructions.
 You can then add users for the sales and support groups.
 
 run the webserver:
 ```sh
-{path/to/project}/manage.py runserver
+python manage.py runserver
 ```
 
 Then open a web browser and enter the url `localhost:8000`  
