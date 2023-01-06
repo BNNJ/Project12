@@ -73,5 +73,7 @@ run the webserver:
 python manage.py runserver
 ```
 
-Then open a web browser and enter the url `localhost:8000`  
-or [click here](http:localhost:8000)  
+Then open a web browser and enter the url `localhost:8000/admin`  
+or [click here](http:localhost:8000/admin)  
+
+Or use the api endpoints at `localhost:8000/api/`
