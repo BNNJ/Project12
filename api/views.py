@@ -25,12 +25,10 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [IsAdmin]
 
-    def get_permissions(self):
-        if self.action in "create":
-            self.permission_classes = []
-        # elif self.action in 'update':
-        # 	self.permission_classes = [IsSelf | IsAdmin]
-        return super().get_permissions()
+    # def get_permissions(self):
+    #     if self.action in "create":
+    #         self.permission_classes = []
+    #     return super().get_permissions()
 
 
 class GroupViewSet(viewsets.ModelViewSet):
