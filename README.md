@@ -58,9 +58,13 @@ Then apply the migrations.
 
 ## usage
 
-Some basic users are provided through the `python -m manage.py seed` command,  
-but you can chose to make your own instead:
+Some basic users are provided through the `python -m manage.py seed` command.  
+The created users are:
+- sales_user (pw: foobarbaz)
+- support_user (pw: foobarbaz)
+- admin (pw: admin)
 
+but you can chose to make your own instead:
 create a superuser:
 ```sh
 python manage.py createsuperuser
