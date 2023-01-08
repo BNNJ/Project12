@@ -91,7 +91,7 @@ class ContractViewSet(viewsets.ModelViewSet):
         return user.contracts.all()
 
     def get_permissions(self):
-        if self.action in ["list", "update"]:
+        if self.action in ["list", "update", "create"]:
             self.permission_classes = [IsAdmin | IsSales]
         else:
             self.permission_classes = [IsAdmin]
